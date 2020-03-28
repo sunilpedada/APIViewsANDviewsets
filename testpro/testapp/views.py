@@ -4,6 +4,8 @@ from rest_framework.generics import ListAPIView
 from.models import EmployeDetails
 from.serializing import EmployeSerializer
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 ############################# APIView ######################################################
 
@@ -84,3 +86,14 @@ class testAPIView(ListAPIView):
 class viewsetCRUD(ModelViewSet):
     queryset=EmployeDetails.objects.all()
     serializer_class=EmployeSerializer
+    authentication_classes=[TokenAuthentication,]
+    permission_classes=[IsAuthenticated,]
+
+#/////////////////// Authentication and authorization////////////////////////////
+#authentication =>Basic Authentication,token,session,JWT
+#Authorization =>drf permission class =>AllowAny,IsAuthenticated,IsAdminUser,IsAuthenticatedOrReadonly,DjangoModelPermission,DjangoModelPermissionOrAnonReadOnly
+############ token authentication####################################################
+
+#DRF=>INBUILT APP=>authtoken
+#to enabel globally =>setting.py => REST_FRAMEWORK={"DEFAULT_AUTHENTICATION_CLASSES":("rest_framework.authentication.TokenAuthentication",),"DEFAULT_PERMISSION_CLASS":("rest_frmework.authorizaton.IsAuthenticated",)}
+### permission_class=[DjangoModelPrmission]=>Django admin interface
